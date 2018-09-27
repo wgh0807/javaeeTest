@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<%@page language="java" contentType="text/html; charset=UTF-8" %>
+<!--这是一个典型的JSP,它包含了JSP中常用的元素-->
+<%!
+    String getDate(){
+        return new java.util.Date().toString();
+    }
+    int count = 10;
+%>
+<html>
+<head>
+    <title>一个典型的JSP</title>
+</head>
+
+<body>
+<jsp:include page="header.jsp" />
+<div style="text-align: center;">
+    <table style="margin:0 auto">
+        <tr>
+            <th>-----------------</th>
+        </tr>
+        <%
+            //color
+            String c1 = "#9cf",c2="#8c3";
+            for(int i = 0 ; i < count; i++){
+                String color;
+                if(i%2 ==0){
+                    color=c1;
+                }else{
+                    color=c2;
+                }
+                out.println("<tr style=\"background:"+color+";\"><td>-</td></tr>");
+            }
+        %>
+    </table>
+    <hr/>
+    当前时间是：
+    <span id="time"></span>
+    当前时间是：
+    <%--下面使用表达式的例子--%>
+    <%=getDate()%>
+
+
+</div>
+<script>
+    setInterval(function(){
+        document.getElementById("time").innerText=new Date().toString();
+    },500)
+
+</script>
+</body>
+
+</html>
