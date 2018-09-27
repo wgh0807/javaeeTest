@@ -26,7 +26,7 @@
     </schema>
     <schema id="7" parent="1" name="javaee">
       <Visible>1</Visible>
-      <Collation>latin1_swedish_ci</Collation>
+      <Collation>utf8mb4_general_ci</Collation>
     </schema>
     <schema id="8" parent="1" name="jsptest">
       <Collation>utf8_general_ci</Collation>
@@ -1331,7 +1331,6 @@
     <column id="318" parent="242" name="email">
       <Position>2</Position>
       <DataType>char(128)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="319" parent="242" name="password">
@@ -1339,11 +1338,19 @@
       <DataType>char(128)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="320" parent="242" name="PRIMARY">
+    <index id="320" parent="242" name="email">
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <key id="321" parent="242" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>id
-email</ColNames>
+      <ColNames>id</ColNames>
       <Primary>1</Primary>
+    </key>
+    <key id="322" parent="242" name="email">
+      <ColNames>email</ColNames>
+      <UnderlyingIndexName>email</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>
