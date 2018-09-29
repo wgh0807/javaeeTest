@@ -18,4 +18,6 @@ dependencies {
     compile 'javax:javaee-api:8.0'
     compile 'mysql:mysql-connector-java:5.1.47'
     compile 'jstl:jstl:1.2'
+    compile 'commons-codec:commons-codec:1.11' //md5加密算法
+    compile 'org.mindrot:jbcrypt:0.4'//bcrypt加密算法
 }

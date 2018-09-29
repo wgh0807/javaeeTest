@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ page import="java.util.LinkedList" %>
-<%@ page import="com.wgh.com.wgh.obj.Book" %>
+<%@ page import="com.wgh.obj.Book" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -23,6 +23,14 @@
     <link href="css/dashboard.css" rel="stylesheet">
 </head>
 <body>
+
+<c:if test="${sessionScope.username eq null}">
+    <c:redirect url="index.jsp"/>
+</c:if>
+<c:if test="${sessionScope.books eq null}">
+    <c:redirect url="/home0928-1/listBook"/>
+</c:if>
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -46,15 +54,28 @@
     </div>
 </nav>
 
+
 <div class="container-fluid">
     <div class="row">
 
+    </div>
+    <div class="row">
+
         <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 main">
+            <h2 class="sub-header">增加图书</h2>
+            <form action="addBookServlet" method="post">
+                <input type="text" placeholder="title" name="title" class="text-input" >
+                <input type="text" placeholder="author" name="author" class="text-input" >
+                <input type="text" placeholder="date" name="date" class="text-input" >
+                <input type="text" placeholder="price" name="price" class="text-input" >
+                <input type="text" placeholder="amount" name="amount" class="text-input" >
+                <input type="submit" value="新增" class="btn btn-primary btn-sm" >
+            </form>
 
             <h2 class="sub-header">书库一览</h2>
             <div class="table-responsive">
                 <input type="button" class="btn btn-default btn-sm col-lg-2" value="刷新" onclick="location.href='listBook'">
-                <input type="button" class="btn btn-info btn-sm col-lg-2 " value="新增" onclick="window.location.href='listBook'">
+                <%--<input type="button" class="btn btn-info btn-sm col-lg-2 " value="新增" onclick="window.location.href='listBook'">--%>
                 <table class="table table-striped ">
                     <thead>
                     <tr>
@@ -69,16 +90,19 @@
                     </thead>
                     <tbody>
                     <c:choose>
-                        <c:when test="${sessionScope.books[0] ne null}">
-                            <tr>
-                                <td>${book.id}</td>
-                                <td>${book.title}</td>
-                                <td>${book.author}</td>
-                                <td>${book.date}</td>
-                                <td>${book.price}</td>
-                                <td>${book.amount}</td>
-                                <td colspan="2"><a href='#'><span>🖊</span>修改</a> <a href='#'><span>❌</span>删除</a></td>
-                            </tr>
+                        <c:when test="${ sessionScope.books[0] ne null }">
+                            <c:forEach var="book" items="${sessionScope.books}" varStatus="vs" >
+                                <tr>
+                                    <td>${book.id}</td>
+                                    <td>${book.title}</td>
+                                    <td>${book.author}</td>
+                                    <td>${book.date}</td>
+                                    <td>${book.price}</td>
+                                    <td>${book.amount}</td>
+                                    <td colspan="2"><a href='#'><span>🖊</span>修改</a> <a href='delBook?id=${book.id}'><span>❌</span>删除</a></td>
+                                </tr>
+                            </c:forEach>
+
                         </c:when>
                         <c:otherwise>
                             <tr>

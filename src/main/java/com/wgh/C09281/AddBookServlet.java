@@ -18,9 +18,9 @@ public class AddBookServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //定义编码方式
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html;charset=UTF-8");
+//        req.setCharacterEncoding("UTF-8");
+//        resp.setCharacterEncoding("UTF-8");
+//        resp.setContentType("text/html;charset=UTF-8");
 
         //获取输入值
         String title = req.getParameter("title");
@@ -52,25 +52,40 @@ public class AddBookServlet extends HttpServlet {
 
             int influenceLine = preparedStatement.executeUpdate();
 
-            out.println("<h1>注册成功</h1>\n" +
-                    "<h3>titile:" + title + " author:" + author+ " date:" + date+ " price:" + price + " amount:" + amount + "</h3>\n" +
-                    "<h4 id='timeout'>3秒后跳转到插入页面</h4>\n" +
-                    "<script>\n" +
-                    "    var time = 3;\n" +
-                    "    var panel= document.getElementById(\"timeout\");\n" +
-                    "    setInterval(function () {\n" +
-                    "        time--;\n" +
-                    "        if(time==0){\n" +
-                    "            location.href=\"addBook.jsp\";\n" +
-                    "        }" +
-                    "        panel.innerText=time+\"秒后跳转到插入页面\";\n" +
-                    "},1000)\n" +
-
-                    "</script>");
+//            out.println("<h1>注册成功</h1>\n" +
+//                    "<h3>titile:" + title + " author:" + author+ " date:" + date+ " price:" + price + " amount:" + amount + "</h3>\n" +
+//                    "<h4 id='timeout'>3秒后跳转到插入页面</h4>\n" +
+//                    "<script>\n" +
+//                    "    var time = 3;\n" +
+//                    "    var panel= document.getElementById(\"timeout\");\n" +
+//                    "    setInterval(function () {\n" +
+//                    "        time--;\n" +
+//                    "        if(time==0){\n" +
+//                    "            location.href=\"displayBook.jsp\";\n" +
+//                    "        }" +
+//                    "        panel.innerText=time+\"秒后跳转到插入页面\";\n" +
+//                    "},1000)\n" +
+//
+//                    "</script>");
+            resp.sendRedirect("listBook");
 
         }catch (SQLException e){
             //异常
             out.println(e.getMessage());
+        }finally {
+            if(connection!=null){
+                try {
+                    connection.close();
+                }catch (SQLException sqlEx){
+                }
+            }
+            if(preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                }catch (SQLException sqlEx){
+                }
+            }
+
         }
 
 

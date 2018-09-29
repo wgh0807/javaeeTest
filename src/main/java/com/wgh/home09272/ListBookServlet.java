@@ -1,6 +1,6 @@
 package com.wgh.home09272;
 
-import com.wgh.com.wgh.obj.Book;
+import com.wgh.obj.Book;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

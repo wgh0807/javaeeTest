@@ -42,8 +42,8 @@
 <script >
     function signout() {
         alert(666);
-        <c:remove var="username" scope="session" />
-        location.href="index.jsp";
+        <%--<c:remove var="username" scope="session" />--%>
+        location.href="signOut";
     }
 </script>
 </html>

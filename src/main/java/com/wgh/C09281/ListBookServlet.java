@@ -1,7 +1,6 @@
 package com.wgh.C09281;
 
-import com.wgh.com.wgh.obj.Book;
-
+import com.wgh.obj.Book;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.util.LinkedList;
+import com.mysql.jdbc.Driver;
 
 @WebServlet(urlPatterns = "/home0928-1/listBook")
 public class ListBookServlet extends HttpServlet {
@@ -23,8 +23,6 @@ public class ListBookServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //设置编码方式
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html charset=UTF-8");
         HttpSession session = req.getSession();
         PrintWriter out=resp.getWriter();
@@ -40,7 +38,7 @@ public class ListBookServlet extends HttpServlet {
 
         //连接数据库
         try{
-            new com.mysql.jdbc.Driver();
+            new Driver();
             connection = DriverManager.getConnection(url);
             preparedStatement = connection.prepareStatement(sql);
 
@@ -53,13 +51,25 @@ public class ListBookServlet extends HttpServlet {
                 String date = rs.getString("date");
                 Double price = rs.getDouble("price");
                 Integer amont = rs.getInt("amount");
-
                 books.add(new Book(id,title,author,date,price,amont));
             }
             session.setAttribute("books",books);
             resp.sendRedirect("displayBook.jsp");
         }catch (SQLException sqlEx){
             out.println(sqlEx.getMessage());
+        }finally {
+            if(connection!=null){
+                try {
+                    connection.close();
+                }catch (SQLException sqlEx){
+                }
+            }
+            if(preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                }catch (SQLException sqlEx){
+                }
+            }
         }
 
     }

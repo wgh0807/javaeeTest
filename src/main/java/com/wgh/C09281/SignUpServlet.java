@@ -49,9 +49,10 @@ public class SignUpServlet extends HttpServlet {
             connection = DriverManager.getConnection(url);
             preparedStatement = connection.prepareStatement(sql);
 
+
             preparedStatement.setString(1,email);
             preparedStatement.setString(2,username);
-            preparedStatement.setString(3,password);
+            preparedStatement.setString(3, password);
 
             //如果成功插入说明email主键没有冲突
 //            注册成功
